@@ -1,0 +1,93 @@
+#
+# system.prop for galaxysplus
+#
+
+# from init.rc
+#service.brcm.bt.srv_active=0
+#service.brcm.bt.hcid_active=0
+#service.brcm.fm.activation=0
+#ro.rfkilldisabled=0
+
+# from build.prop
+
+ro.product.locale.language=en
+ro.product.locale.region=GB
+
+#
+# system.prop for surf
+#
+rild.libpath=/system/lib/libsec-ril.so
+rild.libargs=-d/dev/smd0
+
+# Performance settings.
+ro.kernel.android.checkjni=0
+dalvik.vm.checkjni=false
+dalvik.vm.dexopt-data-only=1
+ro.zram.default=0
+
+#ro.secdevenc=true
+dalvik.vm.dexopt-flags=m=y
+
+dalvik.vm.heapsize=64m
+ro.sf.lcd_density=240
+ro.dev.dmm=1
+dev.dmm.dpd.trigger_delay=30
+
+# Disable fs check on boot by default.
+sys.checkfs.fat=false
+
+#
+# system props for the cne module
+#
+persist.cne.UseCne=vendor
+persist.cne.bat.range.low.med=30
+persist.cne.bat.range.med.high=60
+persist.cne.loc.policy.op=/system/etc/OperatorPolicy.xml
+persist.cne.loc.policy.user=/system/etc/UserPolicy.xml
+persist.cne.bwbased.rat.sel=false
+persist.cne.snsr.based.rat.mgt=false
+persist.cne.bat.based.rat.mgt=false
+persist.cne.rat.acq.time.out=30000
+persist.cne.rat.acq.retry.tout=0
+
+#
+# system prop for Bluetooth Dialup Networking
+#
+#ro.qualcomm.bluetooth.dun=true
+
+#
+# system prop for Bluetooth Auto connect for remote initated connections
+#
+#ro.bluetooth.remote.autoconnect=true
+
+#
+#lpa.decode=false
+#ro.hdmi.enable=true
+
+#
+# system props for the data modules
+#
+#ro.use_data_netmgrd=true
+
+#
+# system props for SD card emulation of emmc partition
+#
+ro.emmc.sdcard.partition=16
+
+#
+# system props for the MM modules
+#
+media.stagefright.enable-player=1
+media.stagefright.enable-meta=false
+media.stagefright.enable-scan=false
+media.stagefright.enable-http=true
+media.stagefright.enable-rtsp=false
+media.stagefright.enable-record=true
+
+# Samsung USB default mode
+#persist.service.usb.setting=0
+
+# Set default USB interface
+persist.sys.usb.config=mass_storage
+
+ro.tether.denied=false

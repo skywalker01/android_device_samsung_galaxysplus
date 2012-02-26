@@ -1,0 +1,78 @@
+on early-init
+  start ueventd
+
+on init
+  export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
+  export LD_LIBRARY_PATH /vendor/lib:/system/lib
+  export ANDROID_ROOT /system
+  export ANDROID_DATA /data
+  export EXTERNAL_STORAGE /sdcard
+
+  symlink /system/etc /etc
+
+#  mkdir /sdcard
+  mkdir /preload
+  mkdir /system
+  mkdir /data
+  mkdir /cache
+#  mkdir /efs
+  mkdir /tmp
+  mkdir /dbdata
+
+#  mkdir /mnt 0775 root root
+  
+  mount debugfs /sys/kernel/debug /sys/kernel/debug
+
+on fs
+  mount tmpfs tmpfs /tmp
+# mounting fs
+  mount ext4 /dev/block/mmcblk0p15 /system wait nodev noatime nodiratime noauto_da_alloc ro
+  #mount ext4 /dev/block/mmcblk0p17 /data wait nosuid nodev noatime nodiratime noauto_da_alloc
+  mount ext4 /dev/block/mmcblk0p16 /cache wait nosuid nodev noatime nodiratime noauto_da_alloc
+  mkdir /persist 0755 system system
+  mount ext4 /dev/block/mmcblk0p12 /persist wait nosuid nodev noatime nodiratime noauto_da_alloc
+  # We chown/chmod /persist again so because mount is run as root + defaults
+  chown system system /persist
+  chmod 0771 /persist
+#  #efs
+#  mkdir /efs 0775 radio radio
+#  mount ext4 /dev/block/mmcblk0p27 /efs wait nodev noatime nodiratime wait
+#  chown system system /efs
+#  chmod 0771 /efs
+## FIXME: vold is not configured now
+#  mount vfat /dev/block/mmcblk0p28 /mnt/sdcard wait nosuid nodev noatime nodiratime
+#  mount vfat /dev/block/mmcblk1p1 /mnt/sd-ext nosuid nodev noatime nodiratime
+
+on boot
+  ifup lo
+  hostname localhost
+  domainname localdomain
+
+  class_start default
+
+service ueventd /sbin/ueventd
+  critical
+
+service console /system/bin/sh
+  console
+
+service playlpm /system/bin/playlpm
+  user root
+
+#TODO: what is this?
+#service immvibed /system/bin/immvibed 
+#  oneshot
+
+service lpmkey /system/bin/charging_mode
+  user root
+  
+# adbd is controlled by the persist.service.adb.enable system property
+service adbd /sbin/adbd
+  user root
+
+on property:persist.service.adb.enable=1
+  start adbd
+
+on property:persist.service.adb.enable=0
+  stop adbd
+
