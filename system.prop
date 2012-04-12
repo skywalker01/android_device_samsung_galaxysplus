@@ -3,10 +3,9 @@
 #
 
 # from init.rc
-#service.brcm.bt.srv_active=0
-#service.brcm.bt.hcid_active=0
-#service.brcm.fm.activation=0
-#ro.rfkilldisabled=0
+service.brcm.bt.srv_active=0
+service.brcm.bt.hcid_active=0
+service.brcm.fm.activation=0
 
 # from build.prop
 
@@ -14,10 +13,10 @@ ro.product.locale.language=en
 ro.product.locale.region=GB
 
 #
-# system.prop for surf
+# Radio
 #
 rild.libpath=/system/lib/libsec-ril.so
-rild.libargs=-d/dev/smd0
+rild.libargs=-d /dev/smd0
 
 # Performance settings.
 ro.kernel.android.checkjni=0
@@ -28,7 +27,6 @@ ro.zram.default=0
 #ro.secdevenc=true
 dalvik.vm.dexopt-flags=m=y
 
-dalvik.vm.heapsize=64m
 ro.sf.lcd_density=240
 ro.dev.dmm=1
 dev.dmm.dpd.trigger_delay=30
@@ -61,13 +59,13 @@ persist.cne.rat.acq.retry.tout=0
 #ro.bluetooth.remote.autoconnect=true
 
 #
-#lpa.decode=false
-#ro.hdmi.enable=true
+lpa.decode=false
+ro.hdmi.enable=true
 
 #
 # system props for the data modules
 #
-#ro.use_data_netmgrd=true
+ro.use_data_netmgrd=true
 
 #
 # system props for SD card emulation of emmc partition
@@ -84,10 +82,7 @@ media.stagefright.enable-http=true
 media.stagefright.enable-rtsp=false
 media.stagefright.enable-record=true
 
-# Samsung USB default mode
-#persist.service.usb.setting=0
-
 # Set default USB interface
-persist.sys.usb.config=mass_storage
+#persist.sys.usb.config=mass_storage
 
 ro.tether.denied=false

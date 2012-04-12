@@ -1,3 +1,17 @@
+/* include/linux/msm_mdp.h
+ *
+ * Copyright (C) 2007 Google Incorporated
+ * Copyright (c) 2009-2011, Code Aurora Forum. All rights reserved.
+ *
+ * This software is licensed under the terms of the GNU General Public
+ * License version 2, as published by the Free Software Foundation, and
+ * may be copied, distributed, and modified under those terms.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
 #ifndef _MSM_MDP_H_
 #define _MSM_MDP_H_
 
@@ -32,24 +46,12 @@
 #define MSMFB_OVERLAY_BLT_OFFSET     _IOW(MSMFB_IOCTL_MAGIC, 143, unsigned int)
 #define MSMFB_HISTOGRAM_START	_IO(MSMFB_IOCTL_MAGIC, 144)
 #define MSMFB_HISTOGRAM_STOP	_IO(MSMFB_IOCTL_MAGIC, 145)
-#define MSMFB_NOTIFY_UPDATE	_IOW(MSMFB_IOCTL_MAGIC, 146, unsigned int)
+#define MSMFB_OVERLAY_CHANGE_ZORDER_VG_PIPES     _IOW(MSMFB_IOCTL_MAGIC, 146, unsigned int)
 
-#define MSMFB_OVERLAY_3D       _IOWR(MSMFB_IOCTL_MAGIC, 147, \
+#define MSMFB_OVERLAY_3D       _IOWR(MSMFB_IOCTL_MAGIC, 146, \
 						struct msmfb_overlay_3d)
 
-#define MSMFB_MIXER_INFO       _IOWR(MSMFB_IOCTL_MAGIC, 148, \
-						struct msmfb_mixer_info_req)
-#define MSMFB_OVERLAY_PLAY_WAIT _IOWR(MSMFB_IOCTL_MAGIC, 149, \
-                                                struct msmfb_overlay_data)
-
-
-#define FB_TYPE_3D_PANEL 0x10101010
 #define MDP_IMGTYPE2_START 0x10000
-
-enum {
-	NOTIFY_UPDATE_START,
-	NOTIFY_UPDATE_STOP,
-};
 
 enum {
 	MDP_RGB_565,      /* RGB 565 planer */
@@ -67,10 +69,7 @@ enum {
 	MDP_Y_CRCB_H2V2_TILE,  /* Y and CrCb, pseudo planer tile */
 	MDP_Y_CBCR_H2V2_TILE,  /* Y and CbCr, pseudo planer tile */
 	MDP_Y_CR_CB_H2V2,  /* Y, Cr and Cb, planar */
-	MDP_Y_CR_CB_GH2V2,  /* Y, Cr and Cb, planar aligned to Android YV12 */
 	MDP_Y_CB_CR_H2V2,  /* Y, Cb and Cr, planar */
-	MDP_Y_CRCB_H1V1,  /* Y and CrCb, pseduo planer w/ Cr is in MSB */
-	MDP_Y_CBCR_H1V1,  /* Y and CbCr, pseduo planer w/ Cb is in MSB */
 	MDP_IMGTYPE_LIMIT,
 	MDP_BGR_565 = MDP_IMGTYPE2_START,      /* BGR 565 planer */
 	MDP_FB_FORMAT,    /* framebuffer format */
@@ -106,10 +105,6 @@ enum {
 #define MDP_OV_PIPE_SHARE		0x00800000
 #define MDP_DEINTERLACE_ODD		0x00400000
 #define MDP_OV_PLAY_NOWAIT		0x00200000
-#define MDP_SOURCE_ROTATED_90		0x00100000
-#define MDP_BORDERFILL_SUPPORTED	0x00010000
-#define MDP_SECURE_OVERLAY_SESSION	0x00008000
-#define MDP_MEMORY_ID_TYPE_FB		0x00001000
 
 #define MDP_TRANSP_NOP 0xffffffff
 #define MDP_ALPHA_NOP 0xff
@@ -154,15 +149,6 @@ struct mdp_ccs {
 	int direction;			/* MDP_CCS_RGB2YUV or YUV2RGB */
 	uint16_t ccs[MDP_CCS_SIZE];	/* 3x3 color coefficients */
 	uint16_t bv[MDP_BV_SIZE];	/* 1x3 bias vector */
-};
-
-struct mdp_csc {
-	int id;
-	uint32_t csc_mv[9];
-	uint32_t csc_pre_bv[3];
-	uint32_t csc_post_bv[3];
-	uint32_t csc_pre_lv[6];
-	uint32_t csc_post_lv[6];
 };
 
 /* The version of the mdp_blit_req structure so that
@@ -233,10 +219,7 @@ struct msmfb_overlay_3d {
 
 struct msmfb_overlay_blt {
 	uint32_t enable;
-	uint32_t offset;
-	uint32_t width;
-	uint32_t height;
-	uint32_t bpp;
+	struct msmfb_data data;
 };
 
 struct mdp_histogram {
@@ -250,24 +233,6 @@ struct mdp_histogram {
 struct mdp_page_protection {
 	uint32_t page_protection;
 };
-
-
-struct mdp_mixer_info {
-	int pndx;
-	int pnum;
-	int ptype;
-	int mixer_num;
-	int z_order;
-};
-
-#define MAX_PIPE_PER_MIXER  4
-
-struct msmfb_mixer_info_req {
-	int mixer_num;
-	int cnt;
-	struct mdp_mixer_info info[MAX_PIPE_PER_MIXER];
-};
-
 
 #ifdef __KERNEL__
 

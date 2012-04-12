@@ -23,6 +23,7 @@ mkdir -p ../../../vendor/$MANUFACTURER/$DEVICE
 #    vendor/samsung/galaxysplus/proprietary/lib/libaudioalsa.so:obj/lib/libaudioalsa.so \\
 
 cp -af ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/libcamera.so ../../../out/target/product/$DEVICE/obj/lib/libcamera.so
+cp -af ../../../vendor/$MANUFACTURER/$DEVICE/proprietary/lib/libaudioalsa.so ../../../out/target/product/$DEVICE/obj/lib/libaudioalsa.so
 
 (cat << EOF) | sed s/__DEVICE__/$DEVICE/g | sed s/__MANUFACTURER__/$MANUFACTURER/g | sed s/__DEVICE__/$DEVICE/g > ../../../vendor/$MANUFACTURER/$DEVICE/$DEVICE-vendor.mk
 # Copyright (C) 2010 The Android Open Source Project

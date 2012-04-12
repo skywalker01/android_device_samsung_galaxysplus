@@ -21,6 +21,9 @@
 
 PRODUCT_RELEASE_NAME := GT-I9001
 
+# Include GSM stuff
+$(call inherit-product, vendor/cyanogen/products/gsm.mk)
+
 # Inherit from those products. Most specific first.
 $(call inherit-product-if-exists, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product-if-exists, $(SRC_TARGET_DIR)/product/full_base.mk)
@@ -35,9 +38,6 @@ PRODUCT_LOCALES += hdpi
 # Inherit some common cyanogenmod stuff.
 $(call inherit-product, vendor/cyanogen/products/common_full.mk)
 $(call inherit-product, vendor/cyanogen/products/bcm_fm_radio.mk)
-
-# Include GSM stuff
-$(call inherit-product, vendor/cyanogen/products/gsm.mk)
 
 # Add additional mounts
 PRODUCT_PROPERTY_OVERRIDES += \

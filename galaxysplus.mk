@@ -14,11 +14,11 @@
 
 
 # This file is the device-specific product definition file for
-# crespo. It lists all the overlays, files, modules and properties
+# ariesve. It lists all the overlays, files, modules and properties
 # that are specific to this hardware: i.e. those are device-specific
 # drivers, configuration files, settings, etc...
 
-# Note that crespo is not a fully open device. Some of the drivers
+# Note that ariesve is not a fully open device. Some of the drivers
 # aren't publicly available in all circumstances, which means that some
 # of the hardware capabilities aren't present in builds where those
 # drivers aren't available. Such cases are handled by having this file
@@ -38,7 +38,7 @@
 # of hardware-specific resource overrides, typically the frameworks and
 # application settings that are stored in resourced.
 
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+DEVICE_PACKAGE_OVERLAYS := device/samsung/ariesve-common/overlay
 
 # kernel modules for ramdisk
 RAMDISK_MODULES = $(addprefix device/samsung/galaxysplus/modules/,bthid.ko sec_param.ko)
@@ -83,6 +83,7 @@ PRODUCT_COPY_FILES += \
 # These are the hardware-specific configuration files
 PRODUCT_COPY_FILES += \
     device/samsung/galaxysplus/etc/gps.conf:system/etc/gps.conf \
+    device/samsung/galaxysplus/etc/wifi.conf:system/etc/wifi/wifi.conf \
     device/samsung/galaxysplus/etc/ts.conf:system/etc/ts.conf
 #    device/samsung/galaxysplus/etc/asound.conf:system/etc/asound.conf
 
@@ -98,15 +99,28 @@ PRODUCT_COPY_FILES += \
 # Bluetooth configuration files
 PRODUCT_COPY_FILES += \
     system/bluetooth/data/main.conf:system/etc/bluetooth/main.conf \
-    vendor/samsung/galaxysplus/proprietary/bin/BCM4329B1_002.002.023.0746.0000_SS_S1-plus-38_4MHz-TEST-ONLY.hcd:system/etc/firmware/bcm4329.hcd
+    vendor/samsung/galaxysplus/proprietary/bin/BCM4329B1_002.002.023.0746.0000_SS_S1-plus-38_4MHz-TEST-ONLY.hcd:system/etc/bluetooth/BCM4329B1_002.002.023.0746.0000_SS_S1-plus-38_4MHz-TEST-ONLY.hcd
 
 # Media configuration xml file
 PRODUCT_COPY_FILES += \
     device/samsung/ariesve-common/media_profiles.xml:system/etc/media_profiles.xml
 
-# Prebuilt libraries that are needed to build open-source libraries
-#PRODUCT_COPY_FILES += \\
-#    vendor/samsung/galaxysplus/proprietary/lib/libcamera.so:obj/lib/libcamera.so
+# These are the hardware-specific features
+PRODUCT_COPY_FILES += \
+	frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+	frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
+	frameworks/base/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+	frameworks/base/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
+	frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
+	frameworks/base/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
+	frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
+	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
+	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
+	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
+	frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
+	frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
+	frameworks/base/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
+	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
 # Additional framework
 PRODUCT_COPY_FILES += \
@@ -116,14 +130,7 @@ PRODUCT_COPY_FILES += \
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
-    device/samsung/ariesve-common/cypress-touchkey.kl:system/usr/keylayout/cypress-touchkey.kl \
-    device/samsung/ariesve-common/sec_jack.kl:system/usr/keylayout/sec_jack.kl \
-    device/samsung/ariesve-common/s3c-keypad.kl:system/usr/keylayout/s3c-keypad.kl
-
-# Generated kcm keymaps
-PRODUCT_PACKAGES := \
-       cypress-touchkey.kcm \
-       s3c-keypad.kcm
+    device/samsung/ariesve-common/sec_jack.kl:system/usr/keylayout/sec_jack.kl
 
 # apns config file
 PRODUCT_COPY_FILES += \
@@ -131,19 +138,14 @@ PRODUCT_COPY_FILES += \
 
 # Libraries
 PRODUCT_PACKAGES += \
-hostap\
-    audio.primary.msm7k \
-    audio_policy.msm7k \
-    audio.a2dp.default \
+    hostap\
     com.android.future.usb.accessory \
-    copybit.msm7k \
-    hwcomposer.msm7k \
     gralloc.msm7k \
+    gralloc.default \
     lights.msm7k \
     overlay.default \
+    sensors.default \
     libaes \
-    libaudio \
-    libaudioutils \
     libauth \
     libcm \
     libfm_wan_api \
@@ -154,6 +156,7 @@ hostap\
     libOmxCore \
     libOmxVenc \
     libOmxVdec \
+    libOmxAacDec \
     libopencorehw \
     libOpenVG \
     liboverlay \
@@ -163,12 +166,13 @@ hostap\
     libQcomUI \
     librs_jni \
     libscreencapture \
+    libspeex \
+    libspeexresampler \
     libstagefrighthw \
     libtilerenderer \
     libtslib \
     libuim \
     libwms \
-    netmgrd \
     corgi \
     dejitter \
     inputraw \
@@ -188,23 +192,6 @@ PRODUCT_PACKAGES += \
 #    LiveWallpapers \
 #    LiveWallpapersPicker
 
-# These are the hardware-specific features
-PRODUCT_COPY_FILES += \
-	frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-	frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
-	frameworks/base/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
-	frameworks/base/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-	frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
-	frameworks/base/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
-	frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
-	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
-	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
-	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
-	frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-	frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-	frameworks/base/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
-	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
-
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number
 PRODUCT_PROPERTY_OVERRIDES := \
@@ -212,6 +199,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
 
 # For userdebug builds
 ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.ril.hsxpa=1 \
+    ro.ril.gprsclass=10 \
     ro.secure=0 \
     ro.allow.mock.location=1 \
     ro.debuggable=1
@@ -221,12 +210,17 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 # be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
        wifi.interface=eth0 \
-       wifi.supplicant_scan_interval=20 \
+       wifi.supplicant_scan_interval=60 \
        dalvik.vm.heapsize=64m \
        ro.config.ehrpd=true \
-       ro.telephony.ril_class=samsung \
-       ro.telephony.sends_barcount=1 \
-       mobiledata.interfaces=pdp0,eth0,gprs,ppp0 \
+       ro.hdmi.enable=true \
+       ro.use_data_netmgrd=true \
+       mobiledata.interfaces=eth0,gprs,ppp0 \
+       debug.sf.hw=1 \
+       debug.gr.numframebuffers=1 \
+       debug.gr.swapinterval=0 \
+       video.accelerate.hw=1 \
+       debug.performance.tuning=1 \
        dev.sfbootcomplete=0
 
 # enable Google-specific location features,
