@@ -44,7 +44,7 @@ TARGET_BOOTLOADER_BOARD_NAME := GT-I9001
 # Assert
 TARGET_OTA_ASSERT_DEVICE := ariesve,GT-I9001,GalaxySplus
 
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/galaxyplus/include
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/galaxysplus/include
 
 # Qcom
 BOARD_USES_QCOM_LIBRPC := true
