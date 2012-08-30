@@ -49,7 +49,7 @@ PRODUCT_VERSION_DEVICE_SPECIFIC :=
 -include vendor/cyanogen/products/common_versions.mk
 
 # Discard inherited values and use our own instead.
-PRODUCT_NAME := galaxysplus
+PRODUCT_NAME := full_galaxysplus
 PRODUCT_DEVICE := galaxysplus
 PRODUCT_MODEL := GT-I9001
 PRODUCT_BRAND := samsung
