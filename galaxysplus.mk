@@ -120,6 +120,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
 	frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
 	frameworks/base/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
+	frameworks/base/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
 	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
 # Additional framework
@@ -139,7 +140,6 @@ PRODUCT_COPY_FILES += \
 # Libraries
 PRODUCT_PACKAGES += \
     hostap\
-    com.android.future.usb.accessory \
     gralloc.msm7k \
     gralloc.default \
     lights.msm7k \
@@ -178,7 +178,8 @@ PRODUCT_PACKAGES += \
     inputraw \
     linear \
     variance \
-    pthres
+    pthres \
+    com.android.future.usb.accessory 
 
 PRODUCT_PACKAGES += \
     make_ext4fs
